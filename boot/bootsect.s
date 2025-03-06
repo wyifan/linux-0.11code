@@ -38,6 +38,16 @@ SETUPSEG = 0x9020			! setup starts here
 SYSSEG   = 0x1000			! system loaded at 0x10000 (65536).
 ENDSEG   = SYSSEG + SYSSIZE		! where to stop loading
 
+!******************************************
+!此处的！是汇编中的注释，由于汇编器不同，支持的注释写法不同，此处与源文件保持一致。
+！为什么在电脑开机后，BIOS会将硬盘启动区中的512B的数据加载到0x7c00位置？
+！ 早期的电脑内存只有32kb，由于内存前1kb（0x0000~0x03FF）用来存储中断向量表（Interrupt Vector Table IVT）,
+! 0x0400~0x05FF用于存储硬件设备状态信息（BIOS数据区,BIOS Data Area, BDA），
+! 0x0600~0x7BFF虽然引导阶段未被使用，但后续可能重新分配有其他用途。为了避免冲突，保持兼容性，所以只能从0x7C00位置开始才可以使用。
+! 为什么是512b数据？传统存储一个扇区是512b，这一标准使得磁盘读写操作更为高效和一致，BIOS在启动时读取第一个扇区大小为512b的数据。同时BIOS只加载一个扇区的内容。
+!
+!******************************************
+
 ! ROOT_DEV:	0x000 - same type of floppy as boot.
 !		0x301 - first partition on first drive etc
 ROOT_DEV = 0x306
