@@ -40,6 +40,10 @@ ENDSEG   = SYSSEG + SYSSIZE		! where to stop loading
 
 !******************************************
 !此处的！是汇编中的注释，由于汇编器不同，支持的注释写法不同，此处与源文件保持一致。
+! CPU在通电时，将CS（code segment register，代码段寄存器，指向CPU当前执行代码在内存中的区域--定义存放代码的存储器的起始地址）置为0xF000，
+! IP（instruction pointer 指令指针寄存器，记录将要执行的指令在代码段中的偏移地址，在 8086 CPU 中，物理内存地址通过将 CS 的值左移 4 位（即乘以 16）后加上 IP 的值计算得出）为0xFFF0，
+! 整个得到0xFFFF0，BIOS第一条指令就设计在此。
+!
 ！为什么在电脑开机后，BIOS会将硬盘启动区中的512B的数据加载到0x7c00位置？
 ！ 早期的电脑内存只有32kb，由于内存前1kb（0x0000~0x03FF）用来存储中断向量表（Interrupt Vector Table IVT）,
 ! 0x0400~0x05FF用于存储硬件设备状态信息（BIOS数据区,BIOS Data Area, BDA），
